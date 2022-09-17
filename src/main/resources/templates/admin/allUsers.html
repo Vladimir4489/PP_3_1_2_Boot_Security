@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>All users</title>
+</head>
+<body>
+<table border="1" BorderCOLOR=”#006600” width="600" BGCOLOR="#FFFFCC">
+    <tr>
+        <th>username</th>
+        <th>name</th>
+        <th>email</th>
+        <th>operations</th>
+    </tr>
+    <div th:each="user : ${user}">
+        <td th:text="${user.username}">данные</td>
+        <td th:text="${user.name}">данные</td>
+        <td th:text="${user.email}">данные</td>
+        <td>
+            <form th:action="@{/admin/{id}/updateInfo(id=${user.id})}" th:method="GET">
+                <input type="submit" value="Update">
+            </form>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.id})}">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+
+        </tr>
+    </div>
+</table>
+<br>
+<br>
+<a href="/admin/newUser">Add new user</a>
+<br>
+<br>
+<br>
+<br>
+<a href="/user">Your information</a>
+<br>
+<br>
+<br>
+<br>
+<a href="/logout">Logout</a>
+</body>
+</html>
