@@ -1,26 +1,24 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.services.RoleServiceImpl;
-import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
+import ru.kata.spring.boot_security.demo.services.RoleService;
+import ru.kata.spring.boot_security.demo.services.UserService;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    private final UserDetailsServiceImpl userService;
-    private final RoleServiceImpl roleServiceImpl;
+    private final UserService userService;
+    private final RoleService roleService;
 
-    @Autowired
-    public AdminController(UserDetailsServiceImpl userService, RoleServiceImpl roleServiceImpl) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
-        this.roleServiceImpl = roleServiceImpl;
+        this.roleService = roleService;
     }
 
 
@@ -31,7 +29,7 @@ public class AdminController {
 
     @GetMapping("/newUser")
     public String newUser(Model model) {
-        List<Role> roleList = roleServiceImpl.getAllRoles();
+        List<Role> roleList = roleService.getAllRoles();
         model.addAttribute("user", new User());
         model.addAttribute("list", roleList);
         return "admin/newUser";
@@ -51,7 +49,7 @@ public class AdminController {
 
     @GetMapping("/{id}/updateInfo")
     public String updateUser(@PathVariable("id") int id, Model model) {
-        List<Role> roleList = roleServiceImpl.getAllRoles();
+        List<Role> roleList = roleService.getAllRoles();
         model.addAttribute("user", userService.getById(id));
         model.addAttribute("list", roleList);
         return "admin/updateUser";
